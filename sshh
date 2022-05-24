@@ -1,0 +1,23 @@
+#!/bin/bash
+
+name=$(cat /Users/Terry/SSH-Service/service.config | awk '{printf $1 " "}')
+if [ "$1" = "-h" ] || [ "$1" = "-help" ]
+then
+    echo "the first args is host alias"
+    echo "    There are several to choose[ "$name"]"
+    exit 0
+fi
+
+if [ -z "$1" ]
+then
+    echo "    please input -help for more information."
+    exit 0
+fi
+
+
+config=$(cat /Users/Terry/SSH-Service/service.config |grep $1)
+ip=`echo "$config" | awk '{print $2}'`
+user=`echo "$config" | awk '{print $3}'`
+password=`echo "$config" | awk '{print $4}'`
+port=`echo "$config" | awk '{print $5}'`
+sshlogin $ip $user $password $port

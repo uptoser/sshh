@@ -1,0 +1,15 @@
+#!/usr/bin/expect
+
+#Usage sshlogin.expect <host> <ssh user> <ssh password> <port>
+
+set timeout 1
+
+spawn ssh [lindex $argv 1]@[lindex $argv 0] -p[lindex $argv 3]
+
+expect "yes/no" { 
+    send "yes\r"
+    expect "*?assword" { send "[lindex $argv 2]\r" }
+    } "*?assword" { send "[lindex $argv 2]\r" }
+
+interact
+#expect eof
